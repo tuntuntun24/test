@@ -1,0 +1,118 @@
+#include<iostream>
+#include<iomanip>
+#include<cstring>
+using namespace std;
+#define MAX 8
+struct SinhVien{
+	int maSV;
+	char hoDem[25];
+	char ten[8];
+	char gioiTinh[4];
+	int namSinh;
+	double diemTK;
+};
+struct List{
+	int count;
+	SinhVien e[MAX];
+};
+void create(List &L){
+	L.count = -1;
+}
+int empty(List L){
+	return (L.count == -1);
+}
+int full(List L){
+	return (L.count == MAX-1);
+}
+int add(List &L, SinhVien sv){
+	if(full(L))
+		return 0;
+	else{
+		L.count++;
+		L.e[L.count] = sv;
+	}
+}
+SinhVien taosv(int maSV,const char *hoDem,const char *ten,const char *gioiTinh, int namSinh, double diemTK){
+	SinhVien sv;
+	sv.maSV = maSV;
+	strcpy(sv.hoDem, hoDem);
+	strcpy(sv.ten, ten);
+	strcpy(sv.gioiTinh, gioiTinh);
+	sv.namSinh = namSinh;
+	sv.diemTK = diemTK;
+	return sv;
+}
+void input(List &L){
+	add(L, taosv(1001,"Tran Van","Thanh","Nam",1999,7.5));
+	add(L, taosv(1002,"Nguyen Thi","Huong","Nu",2000,7.3));
+	add(L, taosv(1003,"Nguyen Van","Binh","Nam",1998,6.4));
+	add(L, taosv(1004,"Bui Thi","Hong","Nu",2000,5.9));
+	add(L, taosv(1005,"Duong Van","Giang","Nam",1998,8.3));
+}
+void htsv(SinhVien sv){
+	cout << fixed;
+	cout << setw(7) << sv.maSV;
+	cout << setw(13) << left << sv.hoDem;
+	cout << setw(7) << sv.ten;
+	cout << setw(11) << sv.gioiTinh;
+	cout << setw(10) << sv.namSinh;
+	cout << setw(10) << setprecision(2) << sv.diemTK << endl;
+}
+void htds(List L){
+	cout << setw(7) << left << "MaSV";
+	cout << setw(13) << "Ho Dem";
+	cout << setw(7) << "Ten";
+	cout << setw(11) << "Gioi Tinh";
+	cout << setw(10) << "Nam Sinh";
+	cout << setw(10) << "Diem TK" << endl;
+	for(int i = 0; i <= L.count; i++){
+		htsv(L.e[i]);
+	}
+}
+void xoadau(List &L){
+	if(empty(L)){
+		cout << "Danh sach rong!";
+		return;
+	}
+	for(int i = 1; i <= L.count; i++)
+		L.e[i-1] = L.e[i];
+	L.count--;
+}
+void chenvitrithu3(List &L){
+	SinhVien sv;
+	sv = taosv(1006,"Le Thi","Doan","Nu",1998,7.6);
+	for(int i = L.count; i >= 2; i--)
+		L.e[i+1] = L.e[i];
+	L.e[2] = sv;
+	L.count++;
+}
+void sapxep(List &L){
+	for(int i = 0; i < L.count; i++){
+		int m = i;
+		for(int j = i+1; j <= L.count; j++){
+			if(strcmpi(L.e[j].ten, L.e[m].ten) < 0)
+				m = j;
+		}
+		SinhVien tg = L.e[i];
+		L.e[i] = L.e[m];
+		L.e[m] = tg;
+	}
+}
+int main(){
+	List L;
+	create(L);
+	input(L);
+	htds(L);
+	cout << "===========================================" << endl;
+	cout << "Danh sach sinh vien sau khi xoa phan tu dau tien" << endl;
+	xoadau(L);
+	htds(L);
+	cout << "===========================================" << endl;
+	cout << "Danh sach sinh vien sau khi chen vao vi tri thu 3" << endl;
+	chenvitrithu3(L);
+	htds(L);
+	cout << "===========================================" << endl;
+	cout << "Danh sach sinh vien sau khi sap xep" << endl;
+	sapxep(L);
+	htds(L);
+}
