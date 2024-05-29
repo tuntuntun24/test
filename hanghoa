@@ -1,0 +1,86 @@
+#include<iostream>
+#include<iomanip>
+#include<cstring>
+using namespace std;
+struct HangHoa{
+	int maHH;
+	char tenHang[12];
+	char donVi[6];
+	int donGia;
+	int soLuong;
+};
+struct Node{
+	HangHoa infor;
+	Node *next;
+};
+
+typedef Node *Tro;
+
+void create(Tro &L){
+	L = NULL;
+}
+int empty(Tro L){
+	return L == NULL;
+}
+void add(Tro &L, HangHoa hh){
+	Tro Q = L, P = new Node;
+	P->infor = hh;
+	P->next = NULL;
+	if(empty(L))
+		L = P;
+	else{
+		while(Q->next != NULL)
+			Q = Q->next;
+		Q->next = P;
+	}
+}
+HangHoa taohh(int maHH,char tenHang[12],char donVi[6],int donGia,int soLuong){
+	HangHoa hh;
+	hh.maHH = maHH;
+	strcpy(hh.tenHang, tenHang);
+	strcpy(hh.donVi, donVi);
+	hh.donGia = donGia;
+	hh.soLuong = soLuong;
+	return hh;
+}
+void taods(Tro &L){
+	add(L, taohh(2002,"But chi","Cai",12000,50));
+	add(L, taohh(2003,"Hop but","Chiec",35000,15));
+	add(L, taohh(2004,"Tay","Cai",10000,30));
+	add(L, taohh(2005,"Thuoc ke","Cai",7000,55));
+	add(L, taohh(2006,"Muc","Lo",15000,28));
+}
+void hthh(HangHoa hh){
+	cout << fixed;
+	cout << setw(7) << hh.maHH;
+	cout << setw(7) << hh.tenHang;
+	cout << setw(7) << hh.donVi;
+	cout << setw(7) << hh.donGia;
+	cout << setw(7) << hh.soLuong;
+}
+void htds(Tro L){
+	cout << setw(7) << "Ma hang";
+	cout << setw(7) << "Ten hang";
+	cout << setw(7) << "Don vi";
+	cout << setw(7) << "Don gia";
+	cout << setw(7) << "So luong" << endl;
+	Tro Q = L;
+	while(Q != NULL){
+		hthh(Q->infor);
+		Q = Q->next;
+	}
+}
+int main(){
+	Tro L;
+	create(L);
+	taods(L);
+	htds(L);
+}
+
+
+
+
+
+
+
+
