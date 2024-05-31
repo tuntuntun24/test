@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        function validateForm() {
+            const username = document.querySelector('input[name="username"]').value;
+            const password = document.querySelector('input[name="password"]').value;
+            if (username.trim() === '' || password.trim() === '') {
+                alert('Bạn nhập sai');
+                return false;
+            }
+            if (password.length < 8) {
+                alert('Bạn nhập sai');
+                return false;
+            }
+            if (!/[A-Z]/.test(password)) {
+                alert('Bạn nhập sai');
+                return false;
+            }
+            if (!/\d/.test(password)) {
+                alert('Bạn nhập sai');
+                return false;
+            }
+            if (/^\d/.test(password)) {
+                alert('Bạn nhập sai');
+                return false;
+            }
+
+            alert('Bạn nhập đúng');
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="return validateForm()">
+        <table>
+            <tr>
+                <th>Username</th>
+                <th><input type="text" name="username"></th>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <th><input type="password" name="password"></th>
+            </tr>
+            <tr>
+                <th colspan="2"><input type="submit" value="Kiểm tra password"></th>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

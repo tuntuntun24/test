@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        function normalizeName() {
+            const fullNameInput = document.querySelector('input[name="fullName"]');
+            const firstNameInput = document.querySelector('input[name="firstName"]');
+
+            const fullName = fullNameInput.value.trim();
+            const normalizedFullName = fullName.replace(/\s+/g, ' ').trim();
+
+            const nameParts = normalizedFullName.split(' ');
+            const lastName = nameParts.pop();
+            const firstName = nameParts.join(' ');
+
+            fullNameInput.value = normalizedFullName;
+            firstNameInput.value = lastName;
+        }
+    </script>
+</head>
+<body>
+    <form onsubmit="event.preventDefault(); normalizeName();">
+        <table>
+            <tr>
+                <th>Họ và Tên :</th>
+                <th><input type="text" name="fullName"></th>
+            </tr>
+            <tr>
+                <th>Tên :</th>
+                <th><input type="text" name="firstName"></th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <input type="submit" value="Hiển thị">
+                    <input type="reset" value="Hủy bỏ">
+                </th>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

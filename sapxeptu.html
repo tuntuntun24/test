@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="myForm">
+        <table border="1">
+            <tr>
+                <th colspan="2">SẮP CÂU THEO QUY LUẬT</th>
+            </tr>
+            <tr>
+                <th>Nhập câu ban đầu: </th>
+                <th><input type="text" id="inputSentence"></th>
+            </tr>
+            <tr>
+                <th>Câu sau khi sắp lại: </th>
+                <th><input type="text" id="rearrangedSentence" readonly></th>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <input type="reset" value="Xóa">
+                    <input type="button" value="Sắp xếp" onclick="rearrangeSentence()">
+                </th>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function rearrangeSentence() {
+            const inputSentence = document.getElementById('inputSentence').value;
+            const words = inputSentence.split(' ');
+            const sortedWords = words.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+            const rearrangedSentence = sortedWords.join(' ');
+
+            document.getElementById('rearrangedSentence').value = rearrangedSentence;
+        }
+    </script>
+</body>
+</html>

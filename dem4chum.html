@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        function countWordsWithM(event) {
+            event.preventDefault();
+            const input = document.getElementById('inputString').value;
+            const words = input.split(' ');
+            let count = 0;
+            for (let i = 0; i < words.length; i++) {
+                const word = words[i];
+                if (word.length === 4 && word.charAt(0).toLowerCase() === 'm') {
+                count++;
+                }
+            }
+            document.getElementById('result').value = count;
+        }
+      </script>
+</head>
+<body>
+    <form onsubmit="countWordsWithM(event)">
+        <table>
+            <tr>
+                <th>Nhập chuỗi:</th>
+                <th><input type="text" size="50" id="inputString" placeholder="Nhập chuỗi"></th>
+            </tr>
+            <tr>
+                <th>Số từ có 4 kí tự bắt đầu bằng "m"</th>
+                <th><input type="text" size="50" id="result" readonly></th>
+            </tr>
+            <tr>
+                <th colspan="2"><input type="submit" value="Tìm" onclick="countWordsWithM()"><input type="reset" value="Hủy bỏ"></th>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
