@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="xsd3"
+    targetNamespace="http://tempuri.org/xsd3.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/xsd3.xsd"
+    xmlns:mstns="http://tempuri.org/xsd3.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+	<xs:simpleType name="idType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{1}\d{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="gType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="male"/>
+			<xs:enumeration value="female"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="emp">
+		<xs:sequence>
+			<xs:element name="name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Z a-z]{3,}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="userid">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[A-Za-z][A-Za-z0-9]{5,}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="phone">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="\d{3}-\d{3}-\d{4}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="salary">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:maxInclusive value="2000"/>
+						<xs:minInclusive value="1000"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="address">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Hà Nội"/>
+						<xs:enumeration value="Hải Phòng"/>
+						<xs:enumeration value="Quảng Ninh"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="idType"/>
+		<xs:attribute name="gender" type="gType"/>
+	</xs:complexType>
+	<xs:element name="company">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="employee" type="emp" minOccurs="2" maxOccurs="50"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
