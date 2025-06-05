@@ -1,0 +1,38 @@
+#dãy fibo
+def fibo1(n):
+    if n < 3:
+        return 1
+    else:
+        return fibo1(n-1) + fibo1(n-2)
+print(fibo1(6))
+
+# tháp hà nội
+def chuyen1(n, a, b, c):
+    if n == 1:
+        print(f"Di chuyển đĩa 1 từ {a} sang {b}")
+    else:
+        chuyen1(n-1, a, c, b)
+        chuyen1(1, a, b, c)
+        chuyen1(n-1, c, b, a)
+chuyen1(3, 'A', 'B', 'C')
+
+def c1(k, n):
+    if k == 0 or k == n:
+        return 1
+    else:
+        return c1(k, n-1) + c1(k-1, n-1)
+
+# tố hợp chập k của n
+def tao(n, k):
+    return [[-1] * (n + 1) for _ in range(k + 1)]
+
+def C2(k, n, a):
+    if k == 0 or k == n:
+        a[k][n] = 1
+    elif a[k][n] < 0:
+        a[k][n] = C2(k, n-1, a) + C2(k-1, n-1, a)
+    return a[k][n]
+k, n = 5, 6
+a = tao(n, k)
+kq = C2(k, n, a)
+print(f"C({k}, {n}) = {kq}")
