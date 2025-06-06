@@ -337,3 +337,52 @@ if len(tim) > 0:
     print(f"Tổng của các số lớn hơn {k} là: {sum(tim)}")
 else:
     print(f"\nKhông có số nào lớn hơn {k} trong mảng A.")
+=========================================================================================
+# quy hoachd động cái tui có đôi tượng
+def caitui(s):
+    d = [
+        {'nhanhieu': 'iphone', 'kichthuoc': 2, 'giaban': 7500000},
+        {'nhanhieu': 'huawei', 'kichthuoc': 3, 'giaban': 8800000},
+        {'nhanhieu': 'samsung', 'kichthuoc': 2, 'giaban': 7000000},
+        {'nhanhieu': 'oppo', 'kichthuoc': 4, 'giaban': 13000000},
+        {'nhanhieu': 'vinsmart', 'kichthuoc': 3, 'giaban': 7800000},
+    ]
+    n = len(d)
+    print(f"Kích thước túi (s): {s} inch")
+    print(f"Tổng số điện thoại trong danh sách (n): {n}")
+
+    f = [[0] * (s + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        for j in range(s + 1):
+            f[i][j] = f[i - 1][j]
+            if d[i - 1]['kichthuoc'] <= j:
+                temp = d[i - 1]['giaban'] + f[i - 1][j - d[i - 1]['kichthuoc']]
+                if f[i][j] < temp:
+                    f[i][j] = temp
+    max_tien = f[n][s]
+    return d, f, n, max_tien
+def truyvet(d, f, n, s, max_tien):
+    i = n
+    j = s
+    chondt = []
+    print("Các điện thoại được chọn:")
+    while i != 0:
+        if f[i][j] != f[i - 1][j]:
+            chondt.append(d[i - 1])
+            j -= d[i - 1]['kichthuoc']
+        i -= 1
+    chondt.reverse()
+
+    print("\n----- KẾT QUẢ -----")
+    print(f"Tổng giá bán lớn nhất có thể đạt được: {max_tien}")
+    print(f"Số lượng điện thoại đã lấy: {len(chondt)} chiếc")
+    print("Các điện thoại đã lấy là:")
+    if not chondt:
+        print("  Không có điện thoại nào được lấy.")
+    else:
+        for i, dt in enumerate(chondt):
+            # Hiển thị nhãn hiệu và giá bán theo yêu cầu
+            print(f"  Điện thoại {i + 1}: Nhãn hiệu: {dt['nhanhieu']}, Giá bán: {dt['giaban']:,} VNĐ")
+s = 7
+d, f, n, max_tien = caitui(s)
+truyvet(d, f, n, s, max_tien)
