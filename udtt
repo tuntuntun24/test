@@ -295,3 +295,45 @@ print(f"T: '{t}'")
 print(f"P: '{p}'")
 print(f"P có trong T ở các vị trí: {kq}\n")
 ===================================================
+n = 12
+A = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10.0, 11, 12.5]
+k = 2.0
+mang_luu_tru = []
+def F1(A, k, i):
+    if i < 0:
+        return 0, 0.0
+    if A[i] % k == 0:
+        mang_luu_tru.append(A[i])
+    return F1(A, k, i-1)
+F1(A, k, n-1)
+mang_luu_tru.sort()
+if len(mang_luu_tru) > 0:
+    print("Các số trong mảng A chia hết cho k:", mang_luu_tru)
+    print("Số lượng các số trong mảng A chia hết cho k:", len(mang_luu_tru))
+    print("Tổng các số chia hết cho 2 trong mảng A:", sum(mang_luu_tru))
+else:
+    print("Không có số nào trong mảng A chia hết cho k")
+print("="* 70)
+n = 12
+A = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10.0, 11, 12.5]
+k = 8.5
+def F(A, k, trai, phai):
+    if trai > phai:
+        return [], 0
+    if trai == phai:
+        if A[trai] > k:
+            return [A[trai]], 1
+        else:
+            return [], 0
+    mid = (trai + phai) // 2
+    mang_trai, dem_trai = F(A, k, trai, mid)
+    mang_phai, dem_phai = F(A, k, mid + 1, phai)
+    return mang_trai + mang_phai, dem_trai + dem_phai
+
+print(f"Mảng A: {A}")
+print(f"Số k: {k}")
+tim, dem = F(A, k, 0, len(A) - 1)
+if len(tim) > 0:
+    print(f"Tổng của các số lớn hơn {k} là: {sum(tim)}")
+else:
+    print(f"\nKhông có số nào lớn hơn {k} trong mảng A.")
