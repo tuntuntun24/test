@@ -1,0 +1,205 @@
+# Bài hải triều
+class TacGia:
+    def __init__(self, ten, quoc_tich):
+        self.ten = ten
+        self.quoc_tich = quoc_tich
+
+    def __str__(self):
+        return (f"Tên tác giả: {self.ten} \n "
+                f"  -  Quốc tịch: {self.quoc_tich}")
+
+class Sach:
+    def __init__(self, ma_sach, ten_sach, nam_xuat_ban, tac_gia):
+        self.ma_sach = ma_sach
+        self.ten_sach = ten_sach
+        self.nam_xuat_ban = nam_xuat_ban
+        self.tac_gia = tac_gia
+
+    def __str__(self):
+        return (f"   -  Mã sách: {self.ma_sach} \n "
+                f"  -  Tên sách: {self.ten_sach} \n "
+                f"  -  Năm xuất bản: {self.nam_xuat_ban} \n "
+                f"  -  {self.tac_gia}")
+
+    def get_tuoi_sach(self):
+        return f"Số năm sách ra đời: {2025 - self.nam_xuat_ban}"
+
+    def __add__(self, other):
+        return f"Tổng hợp: {self.ten_sach} & {other.ten_sach}"
+
+class GiaoTrinh(Sach):
+    def __init__(self, ma_sach, ten_sach, nam_xuat_ban, tac_gia, mon_hoc):
+        super().__init__(ma_sach, ten_sach, nam_xuat_ban, tac_gia)
+        self.mon_hoc = mon_hoc
+
+    def __str__(self):
+        return (f"{super().__str__()} \n"
+                f"   -  Môn học: {self.mon_hoc}")
+
+class ThamKhao(Sach):
+    def __init__(self, ma_sach, ten_sach, nam_xuat_ban, tac_gia, linh_vuc):
+        super().__init__(ma_sach, ten_sach, nam_xuat_ban, tac_gia)
+        self.linh_vuc = linh_vuc
+
+    def __str__(self):
+        return (f"{super().__str__()} \n"
+                f"   -  Lĩnh vực: {self.linh_vuc}")
+
+print("-"*50)
+thanh = TacGia("Chu Phú Thành", "Việt Nam")
+minh = TacGia("Chu Nhật Minh", "Việt Nam")
+
+gt = GiaoTrinh("GT01", "Nhà giả kim", 2000, thanh, "Python cơ bản")
+print(gt)
+
+print("-"*50)
+
+tk = ThamKhao("TK01", "Tôi tài giỏi", 2008, minh, "Thiết kế web")
+print(tk)
+
+print("-"*50)
+
+nap_chong = Sach.__add__(gt, tk)
+print(nap_chong)
+
+======================================================================================
+# Thực hiện các yêu cầu sau:
+# • Xây dựng lớp PERSON gồm các thông tin: Họ và tên, Ngày sinh, Quê quán.
+# • Sau đó, xây dựng lớp dẫn xuất KYSU ngoài các thông tin của lớp Person, lớp
+# KYSU còn có các thông tin về: Ngành học, Năm tốt nghiệp và các phương thức
+# thực hiện:
+# o Khởi tạo thông tin của kỹ sư.
+# o In các thông tin lên màn hình.
+# • Nhập vào một danh sách n kỹ sư. In danh sách của các kỹ sư lên màn hình và
+# thông tin của các kỹ sư tốt nghiệp gần đây nhất (năm tốt nghiệp lớn nhất).
+class Person:
+    def __init__(self, ho, ten, ngay_sinh, que_quan):
+        self.ho = ho
+        self.ten = ten
+        self.ngay_sinh = ngay_sinh
+        self.que_quan = que_quan
+
+    def display_info(self):
+        print(f"  - Họ và tên: {self.ho} {self.ten}")
+        print(f"  - Ngày sinh: {self.ngay_sinh}")
+        print(f"  - Quê quán: {self.que_quan}")
+
+
+class Kysu(Person):
+    def __init__(self, ho, ten, ngay_sinh, que_quan, nganh_hoc, nam_tot_nghiep):
+        super().__init__(ho, ten, ngay_sinh, que_quan)
+        self.nganh_hoc = nganh_hoc
+        self.nam_tot_nghiep = nam_tot_nghiep
+
+    def display_info(self):
+        super().display_info()
+        print(f"  - Ngành học: {self.nganh_hoc}")
+        print(f"  - Năm tốt nghiệp: {self.nam_tot_nghiep}")
+
+    def __str__(self):
+        return (f"Họ tên: {self.ho} {self.ten}, NS: {self.ngay_sinh}, "
+                f"Quê: {self.que_quan}, Ngành: {self.nganh_hoc}, Tốt nghiệp: {self.nam_tot_nghiep}")
+
+ks1 = Kysu("Chu", "Thành", "2004", "Hà Nam", "CNTT", 2026)
+ks1.display_info()
+print("="*40)
+
+def nhap_in():
+    ds_ks = []
+    n = int(input("\nNhập số kỹ sư: "))
+    for i in range(n):
+        print(f"\n--- Nhập thông tin cho Kỹ sư thứ {i + 1} ---")
+        ho = input("Nhập Họ: ")
+        ten = input("Nhập Tên: ")
+        ngay_sinh = input("Nhập Ngày sinh (DD/MM/YYYY): ")
+        que_quan = input("Nhập Quê quán: ")
+        nganh_hoc = input("Nhập Ngành học: ")
+        nam_tot_nghiep = int(input("Nhập năm tốt nghiệp: "))
+        ks = Kysu(ho, ten, ngay_sinh, que_quan, nganh_hoc, nam_tot_nghiep)
+        ds_ks.append(ks)
+    print("="*40)
+    for i in range(n):
+        ds_ks[i].display_info()
+        print("-" * 40)
+
+    temp = 0
+    for i in range(n):
+        if ds_ks[i].nam_tot_nghiep > temp:
+            temp = ds_ks[i].nam_tot_nghiep
+    print("Kỹ sư tốt nghiệp gần đây nhất là:")
+    for i in range(n):
+        if ds_ks[i].nam_tot_nghiep == temp:
+            ds_ks[i].display_info()
+nhap_in()
+
+================================================================================================
+import pandas as pd
+
+# 1. (2đ) Tạo một DataFrame chứa thông tin về các ngôn ngữ lập trình như bảng trên.
+data = {
+    'TÊN': ['Python', 'Java', 'C++', 'Ruby', 'JavaScript'],
+    'NĂM': [1991, 1995, 1985, 1995, 1995],
+    'NGƯỜI SÁNG TẠO': ['Guido van Rossum', 'James Gosling', 'Bjarne Stroustrup', 'Yukihiro Matsumoto', 'Brendan Eich'],
+    'KIỂU LẬP TRÌNH': ['Hướng đối tượng', 'Hướng đối tượng', 'Thủ tục', 'Hướng đối tượng', 'Hướng sự kiện']
+}
+df = pd.DataFrame(data)
+print("--- DataFrame ban đầu ---")
+print(df)
+print("\n" + "="*50 + "\n")
+
+# 2. (2đ) Thêm một ngôn ngữ lập trình mới vào DataFrame và in thông tin dữ liệu ra màn hình:
+# Tên: Go, Người sáng tạo: Robert Griesemer, Năm: 2009, Kiểu lập trình: Thủ tục
+new_language = {
+    'TÊN': 'Go',
+    'NĂM': 2009,
+    'NGƯỜI SÁNG TẠO': 'Robert Griesemer',
+    'KIỂU LẬP TRÌNH': 'Thủ tục'
+}
+# Cách thêm một hàng mới vào DataFrame. len(df) sẽ trả về chỉ số tiếp theo.
+df.loc[len(df)] = new_language
+print("--- DataFrame sau khi thêm Go ---")
+print(df)
+print("\n" + "="*50 + "\n")
+
+# 3. (1đ) Sửa đổi Kiểu lập trình của ngôn ngữ JavaScript thành Chức năng, Hướng sự kiện
+# Tìm hàng có 'TÊN' là 'JavaScript' và cập nhật giá trị cột 'KIỂU LẬP TRÌNH'.
+df.loc[df['TÊN'] == 'JavaScript', 'KIỂU LẬP TRÌNH'] = 'Chức năng, Hướng sự kiện'
+print("--- DataFrame sau khi sửa đổi JavaScript ---")
+print(df)
+print("\n" + "="*50 + "\n")
+
+# 4. (1đ) Xóa ngôn ngữ lập trình có tên là Ruby khỏi DataFrame.
+# Lọc ra các hàng mà 'TÊN' không phải là 'Ruby'.
+df = df[df['TÊN'] != 'Ruby']
+print("--- DataFrame sau khi xóa Ruby ---")
+print(df)
+print("\n" + "="*50 + "\n")
+
+# 5. (1đ) Lọc và in ra các ngôn ngữ lập trình ra đời sau năm 1990.
+languages_after_1990 = df[df['NĂM'] > 1990]
+print("--- Ngôn ngữ lập trình ra đời sau năm 1990 ---")
+print(languages_after_1990)
+print("\n" + "="*50 + "\n")
+
+# 6. (1đ) Đếm số lượng ngôn ngữ lập trình ra đời năm 1995 và thuộc kiểu lập trình theo Hướng đối tượng.
+# Sử dụng điều kiện kép: năm là 1995 VÀ kiểu lập trình là 'Hướng đối tượng'.
+# .shape[0] sẽ trả về số lượng hàng thỏa mãn điều kiện.
+count_1995_oop = df[(df['NĂM'] == 1995) & (df['KIỂU LẬP TRÌNH'] == 'Hướng đối tượng')].shape[0]
+print(f"--- Số lượng ngôn ngữ ra đời năm 1995 và thuộc kiểu 'Hướng đối tượng': {count_1995_oop} ---")
+print("\n" + "="*50 + "\n")
+
+# 7. (1đ) Sắp xếp các bản ghi theo thứ tự tăng dần của Năm.
+# sort_values() để sắp xếp DataFrame theo cột 'NĂM', ascending=True (mặc định là tăng dần).
+df_sorted = df.sort_values(by='NĂM', ascending=True)
+print("--- DataFrame sau khi sắp xếp theo Năm (tăng dần) ---")
+print(df_sorted)
+print("\n" + "="*50 + "\n")
+
+# 8. (1đ) Ghi dữ liệu cuối cùng vào file NNLT.csv
+output_file = 'NNLT.'
+# to_csv() để ghi DataFrame ra file CSV.
+# index=False để không ghi chỉ mục của DataFrame vào file.
+# encoding='utf-8' để đảm bảo hiển thị đúng tiếng Việt nếu có.
+df_sorted.to_csv(output_file, index=False, encoding='utf-8')
+print(f"--- Dữ liệu cuối cùng đã được ghi vào file '{output_file}' ---")
+print("Vui lòng kiểm tra thư mục chứa file script này để tìm 'NNLT.csv'.")
