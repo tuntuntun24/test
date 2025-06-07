@@ -133,6 +133,7 @@ def nhap_in():
 nhap_in()
 
 ================================================================================================
+pip install pandas
 import pandas as pd
 
 # 1. (2đ) Tạo một DataFrame chứa thông tin về các ngôn ngữ lập trình như bảng trên.
