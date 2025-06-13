@@ -1,0 +1,331 @@
+def nhap_thong_tin_sinh_vien(n):
+    print(f"Nhập thông tin cho {n} sinh viên")
+    danh_sach_sinh_vien = []
+    for i in range(n):
+        print(f"--- Nhâp thông tin sinh viên thứ {i+1} ---")
+        msv = input("Nhập mã sinh viên: ")
+        ho_ten = input("Nhập họ tên: ")
+        nam_sinh = int(input("Nhập năm sinh: "))
+        gioi_tinh = input("Nhập giới tính: ")
+        que_quan = input("Nhập quê quán: ")
+        diem_thi = float(input("Nhập điểm thi: "))
+        print("--")
+        sinh_vien = {
+            "msv": msv,
+            "ho_ten": ho_ten,
+            "nam_sinh": nam_sinh,
+            "gioi_tinh": gioi_tinh,
+            "que_quan": que_quan,
+            "diem_thi": diem_thi
+        }
+        danh_sach_sinh_vien.append(sinh_vien)
+    return danh_sach_sinh_vien
+
+def hien_thi_thong_tin_sinh_vien(danh_sach_sinh_vien):
+    for sv in danh_sach_sinh_vien:
+        print(f" -- Mã sinh viên: {sv["msv"]}")
+        print(f"Họ tên: {sv["ho_ten"]}")
+        print(f"Năm sinh: {sv["nam_sinh"]}")
+        print(f"Giới tính: {sv["gioi_tinh"]}")
+        print(f"Quê quán: {sv["que_quan"]}")
+        print(f"Điểm thi: {sv["diem_thi"]}")
+
+def tim_sinh_vien_diem_cao_nhat(danh_sach_sinh_vien):
+    # danh_sach_moi = [sv for sv in danh_sach_sinh_vien if sv["msv"] not in list_msv_can_xoa]
+    diem_cao_nhat = 0
+    for sv in danh_sach_sinh_vien:
+        if sv["diem_thi"] > diem_cao_nhat:
+            diem_cao_nhat = sv["diem_thi"]
+
+    sv_diem_cao_nhat = []
+    for sv in danh_sach_sinh_vien:
+        if sv["diem_thi"] == diem_cao_nhat:
+            sv_diem_cao_nhat.append(sv)
+
+    return diem_cao_nhat, sv_diem_cao_nhat
+
+
+def xoa_masv(danh_sach_sinh_vien):
+    danh_sach_sinh_vien_moi = []
+    masv = input("Nhập mã sinh viên cần xóa: ")
+    for sv in danh_sach_sinh_vien:
+        if sv["msv"] == masv:
+            continue
+        else:
+            danh_sach_sinh_vien_moi.append(sv)
+    return danh_sach_sinh_vien_moi
+
+def main():
+    n = int(input("Nhập n (n >= 5): "))
+    while True:
+        if n < 5:
+            n = int(input("Đề nghị nhập n (n >= 5): "))
+        else:
+            break
+    danh_sach_sinh_vien = nhap_thong_tin_sinh_vien(n)
+
+    print("--- Danh sách sinh viên ---")
+    hien_thi_thong_tin_sinh_vien(danh_sach_sinh_vien)
+
+    print("--- Sinh viên điểm cao nhất ---")
+    diem_cao_nhat, sv_diem_cao_nhat = tim_sinh_vien_diem_cao_nhat(danh_sach_sinh_vien)
+    hien_thi_thong_tin_sinh_vien(sv_diem_cao_nhat)
+
+    print("--- Danh sách sinh viên sau khi xóa ---")
+    danh_sach_sinh_vien_moi = xoa_masv(danh_sach_sinh_vien)
+    hien_thi_thong_tin_sinh_vien(danh_sach_sinh_vien_moi)
+
+if __name__ == "__main__":
+    main()
+===============================================================================================
+class Nguoi:
+    def __init__(self, ho_ten, tuoi, quoc_tich):
+        self.ho_ten = ho_ten
+        self.tuoi = tuoi
+        self.quoc_tich = quoc_tich
+
+    def __str__(self):
+        return (f"Họ tên: {self.ho_ten} \n"
+                f"Tuổi: {self.tuoi} \n"
+                f"Quốc tịch: {self.quoc_tich} \n")
+
+class CauThu(Nguoi):
+    def __init__(self, ho_ten, tuoi, quoc_tich, ma_cau_thu, vi_tri, so_ao, clb):
+        super().__init__(ho_ten, tuoi, quoc_tich)
+        self.ma_cau_thu = ma_cau_thu
+        self.vi_tri = vi_tri
+        self.so_ao = so_ao
+        self.clb = clb
+
+    def __str__(self):
+        clb_info = self.clb.ten_clb if self.clb else "Chưa xác định"
+        return (f"--- Thông tin cầu thủ --- \n"
+                f"{super().__str__()}"
+                f"Mã cầu thủ: {self.ma_cau_thu} \n"
+                f"Vị trí: {self.vi_tri} \n"
+                f"Số áo: {self.so_ao} \n"
+                f"Câu lạc bộ: {clb_info} \n")
+
+class CauLacBo:
+    def __init__(self, ten_clb, ma_clb, hlv, nam_thanh_lap):
+        self.ten_clb = ten_clb
+        self.ma_clb = ma_clb
+        self.hlv = hlv
+        self.nam_thanh_lap = nam_thanh_lap
+
+    def __str__(self):
+        return (f"\n --- Thông tin câu lạc bộ --- \n"
+                f"Tên clb: {self.ten_clb} \n"
+                f"Mã clb: {self.ma_clb} \n"
+                f"Huấn luyện viên: {self.hlv} \n"
+                f"Năm thành lập: {self.nam_thanh_lap} \n")
+
+def main():
+    print("--- Khởi tạo thông tin Câu lạc bộ ---")
+    clb_real_madrid = CauLacBo("Real Madrid", "RMA001", "Carlo Ancelotti", 1902)
+    print(clb_real_madrid)
+    print("=" * 50)
+
+    danh_sach_cau_thu = [
+        CauThu("Luka Modric", 38, "Croatia", "LM10", "Tiền vệ", 10, clb_real_madrid),
+        CauThu("Vinicius Junior", 23, "Brazil", "VJ20", "Tiền đạo", 20, clb_real_madrid),
+        CauThu("Cristiano Ronaldo", 39, "Portugal", "CR07", "Tiền đạo", 8, clb_real_madrid),
+        CauThu("Arda Guler", 19, "Turkey", "AG24", "Tiền vệ", 24, clb_real_madrid),
+        CauThu("Endrick", 17, "Brazil", "EN09", "Tiền đạo", 9, clb_real_madrid)
+    ]
+
+    n = len(danh_sach_cau_thu)
+
+    print("\n--- Danh sách cầu thủ đã nhập ---")
+    for ct in danh_sach_cau_thu:
+        print(ct)
+    print("-" * 50)
+
+    for ct in danh_sach_cau_thu:
+        if ct.ho_ten == "Cristiano Ronaldo":
+            ct.so_ao = 7
+
+    print("\n--- Danh sách cầu thủ sau khi đổi số áo ---")
+    for ct in danh_sach_cau_thu:
+        print(ct)
+    print("-" * 50)
+
+    print("\n--- Danh sách cầu thủ sau dưới 20 tuổi ---")
+    dem = 0
+    for ct in danh_sach_cau_thu:
+        if ct.tuoi < 20:
+            print(f"- {ct.ho_ten} ({ct.tuoi} tuổi)")
+            dem += 1
+    print(f"Có {dem} cầu thủ dưới 20 tuổi")
+    print("-" * 50)
+
+    print("\n--- Sắp xếp danh sánh cầu thủ theo tăng dần số áo ---")
+    danh_sach_cau_thu_sorted = sorted(danh_sach_cau_thu, key=lambda ct: ct.so_ao)
+    for ct in danh_sach_cau_thu_sorted:
+        print(ct)
+    print("=" * 50)
+main()
+============================================================================================================
+class SanPham:
+    def __init__(self, ma_san_pham, ten, gia_ban):
+        self.ma_san_pham = ma_san_pham
+        self.ten = ten
+        self.gia_ban = gia_ban
+
+    def __str__(self):
+        return (f"Mã sản phẩm: {self.ma_san_pham} \n"
+                f"Tên sản phẩm: {self.ten} \n"
+                f"Giá bán: {self.gia_ban}")
+
+class DonHang:
+    def __init__(self, ma_don_hang, ngay_lap, danh_sach_san_pham):
+        self.ma_don_hang = ma_don_hang
+        self.ngay_lap = ngay_lap
+        self.danh_sach_san_pham = danh_sach_san_pham if danh_sach_san_pham is not None else []
+
+    def them_san_pham(self, san_pham):
+        self.danh_sach_san_pham.append(san_pham)
+
+    def tinh_tong_tien(self):
+        cost = 0
+        for san_pham in self.danh_sach_san_pham:
+            cost += san_pham.gia_ban
+        return cost
+
+    def __str__(self):
+        san_pham_str = "\n".join([str(sp) for sp in self.danh_sach_san_pham])
+        return (f"Mã đơn hàng: {self.ma_don_hang}\n"
+                f"Ngày lập: {self.ngay_lap}\n"
+                f"{san_pham_str} \n"
+                f"Tổng tiền sản phẩm: {self.tinh_tong_tien():,.0f} VNĐ")
+
+class DonHangOnline(DonHang):
+    def __init__(self, ma_don_hang, ngay_lap, danh_sach_san_pham, dia_chi_giao_hang, cuoc_phi_van_chuyen):
+        super().__init__(ma_don_hang, ngay_lap, danh_sach_san_pham)
+        self.dia_chi_giao_hang = dia_chi_giao_hang
+        self.cuoc_phi_van_chuyen = cuoc_phi_van_chuyen
+
+    def tinh_tong_tien(self):
+        return super().tinh_tong_tien() + self.cuoc_phi_van_chuyen
+
+    def __str__(self):
+        base_str = super().__str__()
+        return (f"{base_str} \n"
+                f"Địa chỉ giao hàng: {self.dia_chi_giao_hang} \n"
+                f"Cước phí vận chuyển: {self.cuoc_phi_van_chuyen} \n"
+                f"Tổng tiền (bao gồm chi phí vận chuyển): {self.tinh_tong_tien()}")
+
+def nap_chong_toan_tu(dh1, dh2):
+    ma_don_hang_moi = f"DH_GOP_{dh1.ma_don_hang}-{dh2.ma_don_hang}"
+    ngay_lap_moi = "12/6/2025"
+    danh_sach_san_pham_moi = dh1.danh_sach_san_pham + dh2.danh_sach_san_pham
+    return DonHang(ma_don_hang_moi, ngay_lap_moi, danh_sach_san_pham_moi)
+
+def main():
+    sp1 = SanPham("sp01", "Thịt lợn", 130000)
+    sp2 = SanPham("sp02", "Trứng", 30000)
+    sp3 = SanPham("sp03", "Sữa", 53000)
+    sp4 = SanPham("sp04", "Rau ngót", 10000)
+
+    dh1 = DonHang("DH01", "11/5/2025", [sp1, sp2])
+    dh2 = DonHang("DH02", "21/12/2024", [sp3])
+    dh2.them_san_pham(sp4)
+
+    print("----- Đơn hàng 1 -----")
+    print(dh1)
+
+    print("----- Đơn hàng 2 -----")
+    print(dh2)
+
+    print("----- Nạp chồng 2 đơn hàng -----")
+    print(nap_chong_toan_tu(dh1, dh2))
+
+    dho1 = DonHangOnline("DHO01", "11/5/2025", [sp1, sp2], "Hà Nam", 30000)
+    dho2 = DonHangOnline("DHO02", "10/6/2025", [sp3], "Hà Nam", 30000)
+    dho2.them_san_pham(sp4)
+
+    print("----- Đơn hàng online 1 -----")
+    print(dho1)
+
+    print("----- Đơn hàng online 2 -----")
+    print(dho2)
+
+    print("----- Nạp chồng 2 đơn hàng online -----")
+    print(nap_chong_toan_tu(dho1, dho2))
+
+main()
+====================================================================================================
+class MonHoc:
+    def __init__(self, ma_mon, ten_mon, so_tin_chi):
+        self.ma_mon = ma_mon
+        self.ten_mon = ten_mon
+        self.so_tin_chi = so_tin_chi
+
+    def __str__(self):
+        return (f"Tên môn: {self.ten_mon} (mã môn: {self.ma_mon}, số tín chỉ: {self.so_tin_chi}) \n")
+
+class SinhVien:
+    def __init__(self, ma_sinh_vien, ho_ten):
+        self.ma_sinh_vien = ma_sinh_vien
+        self.ho_ten = ho_ten
+        self.diem_tung_mon = {}
+
+    def them_diem(self, mon_hoc, diem):
+        self.diem_tung_mon[mon_hoc] = diem
+
+    def diem_trung_binh(self):
+        tu_so = 0
+        mau_so = 0
+        for mon_hoc, diem in self.diem_tung_mon.items():
+            tu_so += mon_hoc.so_tin_chi * diem
+            mau_so += diem
+        return tu_so / mau_so
+
+    def __str__(self):
+        tt_sv_list = []
+        for mon_hoc, diem in self.diem_tung_mon.items():
+            tt_sv_list.append(f"  - {mon_hoc.ten_mon} ({mon_hoc.so_tin_chi} tín chỉ): {diem}")
+        tt_sv = "\n".join(tt_sv_list)
+
+        return (f"--- Thông tin sinh viên --- \n"
+                f"Mã sinh viên: {self.ma_sinh_vien} \n"
+                f"Họ tên: {self.ho_ten} \n"
+                f"{tt_sv}")
+    def __eq__(self, other):
+        if self.diem_trung_binh() == other.diem_trung_binh():
+            return True
+        return False
+
+class SinhVienChinhQuy(SinhVien):
+    def __init__(self, ma_sinh_vien, ho_ten, lop_hoc):
+        super().__init__(ma_sinh_vien, ho_ten)
+        self.lop_hoc = lop_hoc
+
+    def __str__(self):
+        return (f"{super().__str__()}"
+                f"Lớp học: {self.lop_hoc}")
+
+def main():
+    mh1 = MonHoc("IT01", "Thiết kế web", 3)
+    mh2 = MonHoc("IT02", "Python cơ bản", 2)
+
+    sv1 = SinhVien("SV01", "Chu Thành")
+    sv1.them_diem(mh1, 3.5)
+    sv1.them_diem(mh2, 4)
+    print(sv1)
+
+    sv2 = SinhVien("SV02", "Trần Minh")
+    sv2.them_diem(mh1, 4)
+    sv2.them_diem(mh2, 3.5)
+    print(sv2)
+
+    print("\n ---So sánh kết quả 2 sinh viên")
+    print(f"Điểm sinh viên 1: {sv1.diem_trung_binh()}")
+    print(f"Điểm sinh viên 2: {sv2.diem_trung_binh()}")
+
+    if sv1.__eq__(sv2):
+        print("2 sinh viên có điểm bằng nhau")
+    else:
+        print("2 sinh viên không có điểm bằng nhau")
+
+main()
